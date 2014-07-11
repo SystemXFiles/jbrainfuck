@@ -9,7 +9,6 @@ import ru.systemxfiles.jbrainfuck.util.ByteCodeLoader;
 import ru.systemxfiles.jbrainfuck.util.VirtualMachine;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -84,6 +83,16 @@ public class Compiler extends ru.systemxfiles.jbrainfuck.util.Compiler implement
             il.add(new LdcInsnNode(memorySize / 2));
             il.add(new VarInsnNode(ISTORE, 2));
 
+            //cache out
+            il.add(new VarInsnNode(ALOAD, 0));
+            il.add(new FieldInsnNode(GETFIELD, cn.name, "out", "Ljava/io/PrintStream;"));
+            il.add(new VarInsnNode(ASTORE, 3));
+
+            //cache in
+            il.add(new VarInsnNode(ALOAD, 0));
+            il.add(new FieldInsnNode(GETFIELD, cn.name, "in", "Ljava/io/InputStream;"));
+            il.add(new VarInsnNode(ASTORE, 4));
+
             for (Opcode opcode : opcodes) {
                 switch (opcode.type) {
                     case SHIFT:
@@ -107,26 +116,30 @@ public class Compiler extends ru.systemxfiles.jbrainfuck.util.Compiler implement
 
                         break;
                     case OUT:
-                        for (int i = 0; i < opcode.arg; ++i) {
-                            il.add(new VarInsnNode(ALOAD, 0));
-                            il.add(new FieldInsnNode(GETFIELD, cn.name, "out", "Ljava/io/PrintStream;"));
-                            il.add(new VarInsnNode(ALOAD, 1));
-                            il.add(new VarInsnNode(ILOAD, 2));
-                            il.add(new InsnNode(CALOAD));
+                        il.add(new VarInsnNode(ALOAD, 3));
+                        il.add(new VarInsnNode(ALOAD, 1));
+                        il.add(new VarInsnNode(ILOAD, 2));
+                        il.add(new InsnNode(CALOAD));
+
+                        for (int i = 1; i < opcode.arg; ++i)
+                            il.add(new InsnNode(DUP2));
+
+                        for (int i = 0; i < opcode.arg; ++i)
                             il.add(new MethodInsnNode(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(C)V", false));
-                        }
 
                         break;
                     case IN:
-                        for (int i = 0; i < opcode.arg; ++i) {
-                            il.add(new VarInsnNode(ALOAD, 1));
-                            il.add(new VarInsnNode(ILOAD, 2));
-                            il.add(new VarInsnNode(ALOAD, 0));
-                            il.add(new FieldInsnNode(GETSTATIC, cn.name, "in", "Ljava/io/InputStream;"));
-                            il.add(new MethodInsnNode(INVOKEVIRTUAL, "java/io/InputStream", "read", "()I", false));
-                            il.add(new InsnNode(CASTORE));
-                        }
+                        il.add(new VarInsnNode(ALOAD, 1));
+                        il.add(new VarInsnNode(ILOAD, 2));
 
+                        il.add(new VarInsnNode(ALOAD, 4));
+                        for (int i = 1; i < opcode.arg; ++i)
+                            il.add(new InsnNode(DUP));
+
+                        for (int i = 0; i < opcode.arg; ++i)
+                            il.add(new MethodInsnNode(INVOKEVIRTUAL, "java/io/InputStream", "read", "()I", false));
+
+                        il.add(new InsnNode(CASTORE));
                         break;
                     case WHILE:
                         LabelNode

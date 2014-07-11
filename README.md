@@ -4,7 +4,7 @@ Brainfuck interpreter and compiler for JVM
 An interpreter and compiler Brainfuck under Java VM. It is written entirely in Java, Brainfuck source code can be interpreted in its VM or compiled into bytecode JVM, which optimizes and accelerates through JIT. If you are familiar with the projects JRuby, Jython, etc., then JBrainfuck is the same, only for Brainfuck.
 
 ### Features
-+ Шnterpretation
++ Interpretation
 + Compiling under JVM, execution and saved in "class file".
 + JIT (acceleration to 8x)
 + Optimization (minimize multiple operations and replacement typical)

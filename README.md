@@ -30,6 +30,10 @@ An interpreter and compiler Brainfuck under Java VM. It is written entirely in J
 4. [Settings](https://github.com/SystemX-Files/jbrainfuck/blob/master/src/ru/systemxfiles/jbrainfuck/Settings.java) - stores in itself global setting the memory size and I/O variables
 5. [Translator](https://github.com/SystemX-Files/jbrainfuck/blob/master/src/ru/systemxfiles/jbrainfuck/util/Translator.java) - translator BrainFuck to Java and C++
 
+### Articles about JBrainfuck
+
+1. [About creating JBrainfuck (Russian)](http://habrahabr.ru/post/229267/)
+
 ---
 
 Brainfuck интерпретатор и компилятор для JVM
@@ -63,3 +67,7 @@ Brainfuck интерпретатор и компилятор для JVM
 3. [VirtualMachine](https://github.com/SystemX-Files/jbrainfuck/blob/master/src/ru/systemxfiles/jbrainfuck/util/VirtualMachine.java) - класс для запуска результата компиляции [Java Compiler](https://github.com/SystemX-Files/JBrainFuck/blob/master/src/ru/systemxfiles/jbrainfuck/vm/java/Compiler.java) или [BF Compiler](https://github.com/SystemX-Files/JBrainFuck/blob/master/src/ru/systemxfiles/jbrainfuck/vm/bf/Compiler.java)
 4. [Settings](https://github.com/SystemX-Files/jbrainfuck/blob/master/src/ru/systemxfiles/jbrainfuck/Settings.java) - хранит в себе глобальные настройки размера памяти и переменные ввода/вывода
 5. [Translator](https://github.com/SystemX-Files/jbrainfuck/blob/master/src/ru/systemxfiles/jbrainfuck/util/Translator.java) - транслятор BrainFuck на языки Java и С++
+
+### Статьи о JBrainfuck
+
+1. [О создании JBrainfuck](http://habrahabr.ru/post/229267/)
